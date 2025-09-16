@@ -1,7 +1,6 @@
 {
-  "name": "led-calculator",
+  "name": "nina-website",
   "version": "1.0.0",
-  "description": "LED電視牆專業計算系統",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
