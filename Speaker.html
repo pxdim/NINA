@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>講師陣容 - 2025 國際醫學研討會</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #003366;
+            --accent-blue: #0066cc;
+            --medical-green: #00a896;
+            --light-gray: #f8f9fa;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            background: #ffffff;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 72px;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .speakers-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            padding: 40px 0;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .filter-container {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 24px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+        }
+
+        .filter-pills {
+            display: flex;
+            gap: 12px;
+        }
+
+        .filter-pill {
+            padding: 8px 20px;
+            background: var(--light-gray);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-pill:hover {
+            background: #e9ecef;
+        }
+
+        .filter-pill.active {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+
+        /* Speakers Grid */
+        .speakers-section {
+            padding: 60px 0;
+            background: var(--light-gray);
+        }
+
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .speaker-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .speaker-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .speaker-image-container {
+            position: relative;
+            height: 320px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .speaker-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .speaker-card:hover .speaker-image {
+            transform: scale(1.05);
+        }
+
+        .speaker-role {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .speaker-info {
+            padding: 28px;
+        }
+
+        .speaker-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .speaker-title {
+            font-size: 16px;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .speaker-affiliation {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .speaker-bio {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .speaker-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .speaker-tag {
+            padding: 6px 14px;
+            background: var(--light-gray);
+            border-radius: 16px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Speaker Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 36px;
+            height: 36px;
+            background: var(--light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 20px;
+            color: var(--text-secondary);
+        }
+
+        .modal-close:hover {
+            background: #dee2e6;
+        }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        .modal-speaker-header {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .modal-speaker-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .modal-speaker-info {
+            flex: 1;
+        }
+
+        .modal-speaker-name {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .modal-speaker-title {
+            font-size: 18px;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+        }
+
+        .modal-speaker-affiliation {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .modal-section {
+            margin-bottom: 32px;
+        }
+
+        .modal-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .modal-section-content {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        /* Load More */
+        .load-more {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .load-more-btn {
+            padding: 14px 32px;
+            background: white;
+            color: var(--accent-blue);
+            border: 2px solid var(--accent-blue);
+            border-radius: 32px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .load-more-btn:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .speakers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .search-box {
+                width: 100%;
+                max-width: none;
+            }
+
+            .modal-speaker-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .modal-speaker-image {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">2025 國際醫學研討會 - 講師陣容</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="speakers-hero">
+            <h1 class="hero-title">講師陣容</h1>
+            <p class="hero-subtitle">匯聚國內外頂尖醫學專家，分享最新研究成果與臨床經驗</p>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <div class="container">
+                <div class="filter-container">
+                    <div class="search-box">
+                        <input type="text" class="search-input" placeholder="搜尋講師姓名、專長或機構...">
+                    </div>
+                    
+                    <div class="filter-pills">
+                        <button class="filter-pill active">全部</button>
+                        <button class="filter-pill">Keynote</button>
+                        <button class="filter-pill">Panel</button>
+                        <button class="filter-pill">Workshop</button>
+                        <button class="filter-pill">Day 1</button>
+                        <button class="filter-pill">Day 2</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Speakers Grid -->
+        <section class="speakers-section">
+            <div class="container">
+                <div class="speakers-grid">
+                    <!-- Speaker Card 1 -->
+                    <div class="speaker-card" onclick="openModal(1)">
+                        <div class="speaker-image-container">
+                            <img src="https://via.placeholder.com/400x400/667eea/ffffff?text=Dr.+Chen" alt="陳明德 醫師" class="speaker-image">
+                            <span class="speaker-role">Keynote Speaker</span>
+                        </div>
+                        <div class="speaker-info">
+                            <h3 class="speaker-name">陳明德 醫師</h3>
+                            <p class="speaker-title">心臟內科主任</p>
+                            <p class="speaker-affiliation">台大醫院</p>
+                            <p class="speaker-bio">
+                                專精於心血管疾病診斷與治療，在AI輔助醫療診斷領域有豐富的研究經驗，發表國際論文120餘篇。
+                            </p>
+                            <div class="speaker-tags">
+                                <span class="speaker-tag">AI診斷</span>
+                                <span class="speaker-tag">心血管疾病</span>
+                                <span class="speaker-tag">精準醫療</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Speaker Card 2 -->
+                    <div class="speaker-card" onclick="openModal(2)">
+                        <div class="speaker-image-container">
+                            <img src="https://via.placeholder.com/400x400/764ba2/ffffff?text=Dr.+Wang" alt="王美玲 教授" class="speaker-image">
+                            <span class="speaker-role">Panel Moderator</span>
+                        </div>
+                        <div class="speaker-info">
+                            <h3 class="speaker-name">王美玲 教授</h3>
+                            <p class="speaker-title">癌症研究中心主任</p>
+                            <p class="speaker-affiliation">長庚醫院</p>
+                            <p class="speaker-bio">
+                                致力於腫瘤免疫治療研究，開發多項創新治療方案，獲得多項國際醫學獎項肯定。
+                            </p>
+                            <div class="speaker-tags">
+                                <span class="speaker-tag">腫瘤學</span>
+                                <span class="speaker-tag">免疫治療</span>
+                                <span class="speaker-tag">基因檢測</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Speaker Card 3 -->
+                    <div class="speaker-card" onclick="openModal(3)">
+                        <div class="speaker-image-container">
+                            <img src="https://via.placeholder.com/400x400/00a896/ffffff?text=Prof.+Lee" alt="李志明 院長" class="speaker-image">
+                            <span class="speaker-role">Panel Speaker</span>
+                        </div>
+                        <div class="speaker-info">
+                            <h3 class="speaker-name">李志明 院長</h3>
+                            <p class="speaker-title">神經外科專家</p>
+                            <p class="speaker-affiliation">榮總醫院</p>
+                            <p class="speaker-bio">
+                                機器人手術先驅，完成超過1000例微創手術，在神經科學領域享有國際聲譽。
+                            </p>
+                            <div class="speaker-tags">
+                                <span class="speaker-tag">機器人手術</span>
+                                <span class="speaker-tag">神經科學</span>
+                                <span class="speaker-tag">微創手術</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Speaker Card 4 -->
+                    <div class="speaker-card" onclick="openModal(4)">
+                        <div class="speaker-image-container">
+                            <img src="https://via.placeholder.com/400x400/ff6b6b/ffffff?text=Dr.+Lin" alt="林雅慧 醫師" class="speaker-image">
+                            <span class="speaker-role">Workshop Leader</span>
+                        </div>
+                        <div class="speaker-info">
+                            <h3 class="speaker-name">林雅慧 醫師</h3>
+                            <p class="speaker-title">放射腫瘤科主任</p>
+                            <p class="speaker-affiliation">中國醫藥大學附設醫院</p>
+                            <p class="speaker-bio">
+                                專注於放射治療技術創新，推動質子治療在台灣的發展，培育眾多醫學人才。
+                            </p>
+                            <div class="speaker-tags">
+                                <span class="speaker-tag">放射治療</span>
+                                <span class="speaker-tag">質子治療</span>
+                                <span class="speaker-tag">腫瘤學</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Speaker Card 5 -->
+                    <div class="speaker-card" onclick="openModal(5)">
+                        <div class="speaker-image-container">
+                            <img src="https://via.placeholder.com/400x400/4ecdc4/ffffff?text=Prof.+Zhang" alt="張文哲 教授" class="speaker-image">
+                            <span class="speaker-role">Keynote Speaker</span>
+                        </div>
+                        <div class="speaker-info">
+                            <h3 class="speaker-name">張文哲 教授</h3>
+                            <p class="speaker-title">生物醫學工程系主任</p>
+                            <p class="speaker-affiliation">清華大學</p>
+                            <p class="speaker-bio">
+                                跨領域整合專家，結合工程與醫學開發創新醫材，擁有多項國際專利。
+                            </p>
+                            <div class="speaker-tags">
+                                <span class="speaker-tag">生醫工程</span>
+                                <span class="speaker-tag">醫材開發</span>
+                                <span class="speaker-tag">轉譯醫學</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Speaker Card 6 -->
+                    <div class="speaker-card" onclick="openModal(6)">
+                        <div class="speaker-image-container">
+                            <img src="https://via.placeholder.com/400x400/ffd93d/ffffff?text=Dr.+Huang" alt="黃秀珍 醫師" class="speaker-image">
+                            <span class="speaker-role">Panel Speaker</span>
+                        </div>
+                        <div class="speaker-info">
+                            <h3 class="speaker-name">黃秀珍 醫師</h3>
+                            <p class="speaker-title">小兒科主任</p>
+                            <p class="speaker-affiliation">馬偕醫院</p>
+                            <p class="speaker-bio">
+                                兒童罕見疾病診療權威，建立台灣兒童基因資料庫，促進精準醫療發展。
+                            </p>
+                            <div class="speaker-tags">
+                                <span class="speaker-tag">小兒科</span>
+                                <span class="speaker-tag">罕見疾病</span>
+                                <span class="speaker-tag">基因醫學</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Load More -->
+                <div class="load-more">
+                    <button class="load-more-btn">載入更多講師</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Speaker Detail Modal -->
+    <div class="modal" id="speakerModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-body">
+                <div class="modal-speaker-header">
+                    <img src="https://via.placeholder.com/150x150" alt="" class="modal-speaker-image" id="modalImage">
+                    <div class="modal-speaker-info">
+                        <h2 class="modal-speaker-name" id="modalName">講師姓名</h2>
+                        <p class="modal-speaker-title" id="modalTitle">職稱</p>
+                        <p class="modal-speaker-affiliation" id="modalAffiliation">服務機構</p>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3 class="modal-section-title">專業背景</h3>
+                    <div class="modal-section-content" id="modalBackground">
+                        詳細的專業背景介紹內容...
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3 class="modal-section-title">研究領域</h3>
+                    <div class="modal-section-content" id="modalResearch">
+                        研究領域與學術成就...
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3 class="modal-section-title">演講主題</h3>
+                    <div class="modal-section-content" id="modalTopic">
+                        本次會議演講主題與內容摘要...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Speaker data
+        const speakers = {
+            1: {
+                name: '陳明德 醫師',
+                title: '心臟內科主任',
+                affiliation: '台大醫院',
+                image: 'https://via.placeholder.com/150x150/667eea/ffffff?text=Dr.+Chen',
+                background: '陳明德醫師畢業於台灣大學醫學系，後赴美國哈佛大學醫學院進修。專精於心血管疾病診斷與治療，特別在AI輔助醫療診斷領域有突出貢獻。擔任多個國際醫學期刊編輯委員，發表SCI論文120餘篇，h-index達45。',
+                research: '主要研究領域包括：人工智慧在心血管疾病早期診斷的應用、心臟影像學、介入性心臟治療、心血管疾病風險預測模型開發。近年來致力於開發AI輔助診斷系統，準確率達95%以上。',
+                topic: '「AI驅動的心血管疾病精準診斷：從理論到臨床實踐」- 本演講將分享如何運用深度學習技術分析心電圖、心臟超音波等醫學影像，實現早期診斷與個人化治療方案制定。'
+            },
+            2: {
+                name: '王美玲 教授',
+                title: '癌症研究中心主任',
+                affiliation: '長庚醫院',
+                image: 'https://via.placeholder.com/150x150/764ba2/ffffff?text=Dr.+Wang',
+                background: '王美玲教授為腫瘤免疫學領域的領軍人物，擁有20年以上的臨床與研究經驗。曾獲科技部傑出研究獎、國際癌症研究協會傑出貢獻獎等殊榮。',
+                research: '專注於腫瘤微環境研究、免疫檢查點抑制劑開發、CAR-T細胞治療、癌症基因體學。建立台灣首個癌症免疫治療資料庫，收錄超過5000例個案。',
+                topic: '「次世代免疫治療：從基礎研究到臨床轉譯」- 探討最新的免疫治療策略，包括雙特異性抗體、腫瘤疫苗、細胞治療等創新療法的臨床應用。'
+            },
+            3: {
+                name: '李志明 院長',
+                title: '神經外科專家',
+                affiliation: '榮總醫院',
+                image: 'https://via.placeholder.com/150x150/00a896/ffffff?text=Prof.+Lee',
+                background: '李志明院長是亞洲機器人手術的先驅，完成超過1000例達文西機器人手術。曾任亞太神經外科學會理事長，獲頒醫療奉獻獎。',
+                research: '專精於腦腫瘤手術、功能性神經外科、機器人輔助手術、神經導航系統開發。開發多項手術創新技術，顯著提升手術成功率並減少併發症。',
+                topic: '「機器人手術的現在與未來：精準醫療的實踐」- 分享機器人手術系統的最新進展，以及AI整合如何提升手術精準度與安全性。'
+            }
+        };
+
+        // Filter functionality
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                // Filter logic would go here
+            });
+        });
+
+        // Modal functions
+        function openModal(speakerId) {
+            const speaker = speakers[speakerId];
+            if (speaker) {
+                document.getElementById('modalImage').src = speaker.image;
+                document.getElementById('modalName').textContent = speaker.name;
+                document.getElementById('modalTitle').textContent = speaker.title;
+                document.getElementById('modalAffiliation').textContent = speaker.affiliation;
+                document.getElementById('modalBackground').textContent = speaker.background;
+                document.getElementById('modalResearch').textContent = speaker.research;
+                document.getElementById('modalTopic').textContent = speaker.topic;
+            }
+            document.getElementById('speakerModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('speakerModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('speakerModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            // Search logic would go here
+            console.log('Searching for:', searchTerm);
+        });
+
+        // Load more functionality
+        document.querySelector('.load-more-btn').addEventListener('click', function() {
+            this.textContent = '載入中...';
+            setTimeout(() => {
+                // Would load more speakers here
+                this.textContent = '載入更多講師';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
