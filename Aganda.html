@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大會議程 - 2025 國際醫學研討會</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #003366;
+            --accent-blue: #0066cc;
+            --medical-green: #00a896;
+            --light-gray: #f8f9fa;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #e9ecef;
+            --keynote-color: #667eea;
+            --panel-color: #764ba2;
+            --workshop-color: #00a896;
+            --break-color: #ffc107;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            background: #ffffff;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 72px;
+        }
+
+        /* Hero Section */
+        .agenda-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        /* Quick Actions Bar */
+        .quick-actions {
+            background: white;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 72px;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .actions-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        /* Day Selector */
+        .day-selector {
+            display: flex;
+            gap: 12px;
+            padding: 4px;
+            background: var(--light-gray);
+            border-radius: 32px;
+        }
+
+        .day-btn {
+            padding: 12px 28px;
+            background: transparent;
+            border: none;
+            border-radius: 28px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .day-btn.active {
+            background: white;
+            color: var(--accent-blue);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .day-btn small {
+            display: block;
+            font-size: 12px;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        /* Track Filter */
+        .track-filter {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .track-pill {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid;
+        }
+
+        .track-pill.keynote {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--keynote-color);
+            border-color: var(--keynote-color);
+        }
+
+        .track-pill.panel {
+            background: rgba(118, 75, 162, 0.1);
+            color: var(--panel-color);
+            border-color: var(--panel-color);
+        }
+
+        .track-pill.workshop {
+            background: rgba(0, 168, 150, 0.1);
+            color: var(--workshop-color);
+            border-color: var(--workshop-color);
+        }
+
+        .track-pill.active {
+            opacity: 1;
+        }
+
+        .track-pill:not(.active) {
+            opacity: 0.5;
+            background: white;
+        }
+
+        /* Download Button */
+        .download-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid var(--accent-blue);
+            color: var(--accent-blue);
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* Timeline View */
+        .timeline-section {
+            padding: 60px 0;
+            background: var(--light-gray);
+        }
+
+        .timeline-container {
+            position: relative;
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 32px;
+        }
+
+        /* Time Column */
+        .time-column {
+            position: sticky;
+            top: 180px;
+            height: fit-content;
+        }
+
+        .time-slot {
+            padding: 8px 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-align: right;
+            margin-bottom: 24px;
+        }
+
+        /* Sessions Column */
+        .sessions-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Session Cards */
+        .session-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .session-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .session-card.keynote {
+            border-left-color: var(--keynote-color);
+        }
+
+        .session-card.panel {
+            border-left-color: var(--panel-color);
+        }
+
+        .session-card.workshop {
+            border-left-color: var(--workshop-color);
+        }
+
+        .session-card.break {
+            border-left-color: var(--break-color);
+            background: rgba(255, 193, 7, 0.05);
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .session-time {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .session-type {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .session-type.keynote {
+            background: var(--keynote-color);
+        }
+
+        .session-type.panel {
+            background: var(--panel-color);
+        }
+
+        .session-type.workshop {
+            background: var(--workshop-color);
+        }
+
+        .session-type.break {
+            background: var(--break-color);
+        }
+
+        .session-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .session-location {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .session-participants {
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .participant-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        .participant-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            min-width: 60px;
+        }
+
+        .participant-names {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .participant-chip {
+            padding: 6px 14px;
+            background: var(--light-gray);
+            border-radius: 16px;
+            font-size: 14px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .participant-chip:hover {
+            background: #e2e6ea;
+        }
+
+        /* Break Card Simplified */
+        .session-card.break .session-participants {
+            display: none;
+        }
+
+        /* Parallel Sessions */
+        .parallel-sessions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .track-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        /* Personal Schedule */
+        .add-to-schedule {
+            margin-top: 16px;
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid var(--accent-blue);
+            color: var(--accent-blue);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-schedule:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .add-to-schedule.added {
+            background: var(--medical-green);
+            border-color: var(--medical-green);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline-container {
+                grid-template-columns: 1fr;
+            }
+
+            .time-column {
+                display: none;
+            }
+
+            .actions-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .parallel-sessions {
+                grid-template-columns: 1fr;
+            }
+
+            .session-time {
+                font-size: 16px;
+                font-weight: 700;
+                color: var(--accent-blue);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">2025 國際醫學研討會 - 大會議程</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="agenda-hero">
+            <h1 class="hero-title">大會議程</h1>
+            <p class="hero-subtitle">兩天精彩議程，28場專題演講，4場實作工作坊</p>
+        </section>
+
+        <!-- Quick Actions Bar -->
+        <section class="quick-actions">
+            <div class="container">
+                <div class="actions-wrapper">
+                    <!-- Day Selector -->
+                    <div class="day-selector">
+                        <button class="day-btn active" data-day="1">
+                            Day 1
+                            <small>10月15日</small>
+                        </button>
+                        <button class="day-btn" data-day="2">
+                            Day 2
+                            <small>10月16日</small>
+                        </button>
+                    </div>
+
+                    <!-- Track Filter -->
+                    <div class="track-filter">
+                        <div class="track-pill keynote active">Keynote</div>
+                        <div class="track-pill panel active">Panel</div>
+                        <div class="track-pill workshop active">Workshop</div>
+                    </div>
+
+                    <!-- Download Button -->
+                    <button class="download-btn">下載完整議程 PDF</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline View -->
+        <section class="timeline-section">
+            <div class="container">
+                <div class="timeline-container">
+                    <!-- Time Column -->
+                    <div class="time-column">
+                        <div class="time-slot">08:00</div>
+                        <div class="time-slot" style="margin-top: 120px;">09:00</div>
+                        <div class="time-slot" style="margin-top: 150px;">10:30</div>
+                        <div class="time-slot" style="margin-top: 120px;">12:00</div>
+                        <div class="time-slot" style="margin-top: 100px;">14:00</div>
+                        <div class="time-slot" style="margin-top: 180px;">16:00</div>
+                        <div class="time-slot" style="margin-top: 120px;">17:30</div>
+                    </div>
+
+                    <!-- Sessions Column -->
+                    <div class="sessions-column">
+                        <!-- 08:00 - Registration -->
+                        <div class="session-card break">
+                            <div class="session-header">
+                                <span class="session-time">08:00 - 09:00</span>
+                                <span class="session-type break">報到</span>
+                            </div>
+                            <h3 class="session-title">報到與迎賓茶會</h3>
+                            <p class="session-location">1樓大廳</p>
+                        </div>
+
+                        <!-- 09:00 - Opening Keynote -->
+                        <div class="session-card keynote">
+                            <div class="session-header">
+                                <span class="session-time">09:00 - 10:00</span>
+                                <span class="session-type keynote">Keynote</span>
+                            </div>
+                            <h3 class="session-title">開幕演講：AI驅動的精準醫療新紀元</h3>
+                            <p class="session-location">3樓大會堂</p>
+                            <div class="session-participants">
+                                <div class="participant-row">
+                                    <span class="participant-label">主持人</span>
+                                    <div class="participant-names">
+                                        <span class="participant-chip">李志明 院長</span>
+                                    </div>
+                                </div>
+                                <div class="participant-row">
+                                    <span class="participant-label">講師</span>
+                                    <div class="participant-names">
+                                        <span class="participant-chip">陳明德 醫師</span>
+                                        <span class="participant-chip">Dr. John Smith</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-schedule">加入我的議程</button>
+                        </div>
+
+                        <!-- 10:00 - Break -->
+                        <div class="session-card break">
+                            <div class="session-header">
+                                <span class="session-time">10:00 - 10:30</span>
+                                <span class="session-type break">休息</span>
+                            </div>
+                            <h3 class="session-title">茶歇時間</h3>
+                            <p class="session-location">3樓交誼廳</p>
+                        </div>
+
+                        <!-- 10:30 - Panel Discussion -->
+                        <div class="session-card panel">
+                            <div class="session-header">
+                                <span class="session-time">10:30 - 12:00</span>
+                                <span class="session-type panel">Panel</span>
+                            </div>
+                            <h3 class="session-title">Panel Discussion: 數位醫療的倫理與法規挑戰</h3>
+                            <p class="session-location">3樓大會堂</p>
+                            <div class="session-participants">
+                                <div class="participant-row">
+                                    <span class="participant-label">主持人</span>
+                                    <div class="participant-names">
+                                        <span class="participant-chip">王美玲 教授</span>
+                                    </div>
+                                </div>
+                                <div class="participant-row">
+                                    <span class="participant-label">與談人</span>
+                                    <div class="participant-names">
+                                        <span class="participant-chip">張文哲 教授</span>
+                                        <span class="participant-chip">林雅慧 醫師</span>
+                                        <span class="participant-chip">黃秀珍 醫師</span>
+                                        <span class="participant-chip">陳建宏 律師</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-schedule">加入我的議程</button>
+                        </div>
+
+                        <!-- 12:00 - Lunch -->
+                        <div class="session-card break">
+                            <div class="session-header">
+                                <span class="session-time">12:00 - 14:00</span>
+                                <span class="session-type break">午餐</span>
+                            </div>
+                            <h3 class="session-title">午餐時間 & 海報展示</h3>
+                            <p class="session-location">2樓餐廳 & 展示區</p>
+                        </div>
+
+                        <!-- 14:00 - Parallel Sessions -->
+                        <div class="parallel-sessions">
+                            <!-- Track A -->
+                            <div>
+                                <div class="track-label">Track A - 主會場</div>
+                                <div class="session-card keynote">
+                                    <div class="session-header">
+                                        <span class="session-time">14:00 - 15:30</span>
+                                        <span class="session-type keynote">Keynote</span>
+                                    </div>
+                                    <h3 class="session-title">基因體醫學的臨床應用</h3>
+                                    <p class="session-location">3樓大會堂</p>
+                                    <div class="session-participants">
+                                        <div class="participant-row">
+                                            <span class="participant-label">主持人</span>
+                                            <div class="participant-names">
+                                                <span class="participant-chip">楊志偉 教授</span>
+                                            </div>
+                                        </div>
+                                        <div class="participant-row">
+                                            <span class="participant-label">講師</span>
+                                            <div class="participant-names">
+                                                <span class="participant-chip">Prof. Sarah Johnson</span>
+                                                <span class="participant-chip">劉明賢 醫師</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="add-to-schedule">加入我的議程</button>
+                                </div>
+                            </div>
+
+                            <!-- Track B -->
+                            <div>
+                                <div class="track-label">Track B - 工作坊</div>
+                                <div class="session-card workshop">
+                                    <div class="session-header">
+                                        <span class="session-time">14:00 - 16:00</span>
+                                        <span class="session-type workshop">Workshop</span>
+                                    </div>
+                                    <h3 class="session-title">實作工作坊：機器學習在醫學影像分析</h3>
+                                    <p class="session-location">4樓會議室A</p>
+                                    <div class="session-participants">
+                                        <div class="participant-row">
+                                            <span class="participant-label">主持人</span>
+                                            <div class="participant-names">
+                                                <span class="participant-chip">黃俊銘 博士</span>
+                                            </div>
+                                        </div>
+                                        <div class="participant-row">
+                                            <span class="participant-label">講師</span>
+                                            <div class="participant-names">
+                                                <span class="participant-chip">吳承恩 工程師</span>
+                                                <span class="participant-chip">林智偉 博士</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="add-to-schedule">加入我的議程</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 16:00 - Coffee Break -->
+                        <div class="session-card break">
+                            <div class="session-header">
+                                <span class="session-time">16:00 - 16:30</span>
+                                <span class="session-type break">休息</span>
+                            </div>
+                            <h3 class="session-title">下午茶時間</h3>
+                            <p class="session-location">3樓交誼廳</p>
+                        </div>
+
+                        <!-- 16:30 - Closing Session -->
+                        <div class="session-card panel">
+                            <div class="session-header">
+                                <span class="session-time">16:30 - 17:30</span>
+                                <span class="session-type panel">Panel</span>
+                            </div>
+                            <h3 class="session-title">綜合座談：台灣醫療科技的未來展望</h3>
+                            <p class="session-location">3樓大會堂</p>
+                            <div class="session-participants">
+                                <div class="participant-row">
+                                    <span class="participant-label">主持人</span>
+                                    <div class="participant-names">
+                                        <span class="participant-chip">陳時中 前部長</span>
+                                    </div>
+                                </div>
+                                <div class="participant-row">
+                                    <span class="participant-label">與談人</span>
+                                    <div class="participant-names">
+                                        <span class="participant-chip">所有keynote講師</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-schedule">加入我的議程</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Day selector
+        document.querySelectorAll('.day-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                // Load different day's agenda
+                console.log('Loading Day', this.dataset.day);
+            });
+        });
+
+        // Track filter
+        document.querySelectorAll('.track-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                this.classList.toggle('active');
+                // Filter sessions by track type
+                filterSessions();
+            });
+        });
+
+        function filterSessions() {
+            const activeFilters = Array.from(document.querySelectorAll('.track-pill.active'))
+                .map(pill => pill.textContent.toLowerCase());
+            
+            document.querySelectorAll('.session-card').forEach(card => {
+                // Filter logic would go here
+                console.log('Filtering sessions...');
+            });
+        }
+
+        // Add to schedule
+        document.querySelectorAll('.add-to-schedule').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.classList.contains('added')) {
+                    this.classList.remove('added');
+                    this.textContent = '加入我的議程';
+                } else {
+                    this.classList.add('added');
+                    this.textContent = '已加入議程';
+                }
+            });
+        });
+
+        // Download PDF
+        document.querySelector('.download-btn').addEventListener('click', function() {
+            alert('正在準備PDF下載...');
+        });
+    </script>
+</body>
+</html>
